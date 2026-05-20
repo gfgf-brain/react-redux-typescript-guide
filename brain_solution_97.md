@@ -1,6 +1,5 @@
-```markdown
-<!-- Brain solution for: Add a section about Types global namespace
-<!-- Approach: Demonstrating how to use the global namespace in TypeScript for global types.
+<!-- Brain solution for: Add a section about Types global namespace -->
+<!-- Approach: Demonstrating how to use the global namespace in TypeScript for global types. -->
 
 # Using the Global Namespace in TypeScript
 =====================================
@@ -21,6 +20,18 @@ declare global {
   }
 }
 ```
+
+> **Note on naming conflicts:** When using `declare global`, be careful to avoid naming conflicts with existing global types (e.g., built-in DOM types like `Document`, `Window`, or `Event`). Prefer specific, application-scoped names (e.g., `AppUser`, `GFGFOrder`) to prevent collisions. If your interface augments an existing global (e.g., extending `Window`), use module augmentation syntax inside a `.d.ts` file:
+>
+> ```typescript
+> // global.d.ts
+> declare global {
+>   interface Window {
+>     myAppConfig: AppConfig;
+>   }
+> }
+> export {}; // Required to make this a module
+> ```
 
 This type is now available across the entire project and can be used in any file without importing it.
 
@@ -60,4 +71,3 @@ While global types can be convenient, it's essential to use them judiciously. He
 ----------
 
 In this section, we demonstrated how to use the global namespace in TypeScript to declare types that are available across the entire project. We showed how to declare global types and use them in React components. By following best practices and using global types judiciously, you can take advantage of this powerful feature to simplify your code and improve maintainability.
-```
