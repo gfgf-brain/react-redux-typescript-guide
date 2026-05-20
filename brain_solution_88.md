@@ -1,6 +1,5 @@
-```markdown
-<!-- Brain solution for: Can you provide an example for type checking JSX children
-<!-- Approach: Demonstrating different patterns for type-checking JSX children in TypeScript/React.
+<!-- Brain solution for: Can you provide an example for type checking JSX children -->
+<!-- Approach: Demonstrating different patterns for type-checking JSX children in TypeScript/React. -->
 
 # Type Checking JSX Children in TypeScript/React
 =============================================
@@ -103,4 +102,3 @@ const MyComponent: React.FC<Props> = ({ children }) => {
 In this example, the `children` prop is typed as `React.ReactNode[] | null`, which means it can only accept an array of React nodes or null.
 
 By using these different patterns for type-checking JSX children, you can ensure that your React components are properly typed and catch any type-related errors at compile-time.
-```
