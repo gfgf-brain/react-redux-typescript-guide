@@ -2247,7 +2247,6 @@ Higher-Order Components:
 
 ---
 
----
 
 ## Typing connect() Factory Functions
 
@@ -2285,10 +2284,13 @@ const makeMapStateToProps: MapStateToPropsFactory<StateProps, OwnProps, RootStat
       (users, id) => users[id],
     );
 
-    return (state, ownProps) => ({
-      username: selectUser(state, ownProps)?.name ?? 'Unknown',
-      isActive: selectUser(state, ownProps)?.active ?? false,
-    });
+    return (state, ownProps) => {
+      const user = selectUser(state, ownProps);
+      return {
+        username: user?.name ?? 'Unknown',
+        isActive: user?.active ?? false,
+      };
+    };
   };
 
 export default connect(makeMapStateToProps)(MyComponent);
@@ -2300,6 +2302,10 @@ export default connect(makeMapStateToProps)(MyComponent);
 import { Dispatch } from 'redux';
 import { MapDispatchToPropsFactory } from 'react-redux';
 import { updateUser, deleteUser } from './actions';
+
+interface OwnProps {
+  userId: string;
+}
 
 interface DispatchProps {
   onUpdate: (name: string) => void;
@@ -2338,8 +2344,14 @@ const makeMapState: MapStateToPropsFactory<StateProps, OwnProps, RootState> = ()
 
 ```typescript
 import React from 'react';
+import { Dispatch } from 'redux';
 import { connect, MapStateToPropsFactory } from 'react-redux';
 import { createSelector } from 'reselect';
+import { deleteUser } from './actions';
+
+interface RootState {
+  users: Record<string, { name: string; active: boolean }>;
+}
 
 // Own props passed to the component from outside
 interface OwnProps  { userId: string; }
@@ -2363,10 +2375,13 @@ const makeMapState: MapStateToPropsFactory<StateProps, OwnProps, RootState> = ()
     (_: RootState, p: OwnProps) => p.userId,
     (users, id) => users[id],
   );
-  return (state, ownProps) => ({
-    username: sel(state, ownProps)?.name  ?? 'Unknown',
-    isActive: sel(state, ownProps)?.active ?? false,
-  });
+  return (state, ownProps) => {
+    const user = sel(state, ownProps);
+    return {
+      username: user?.name ?? 'Unknown',
+      isActive: user?.active ?? false,
+    };
+  };
 };
 
 const mapDispatch = (dispatch: Dispatch, { userId }: OwnProps): DispatchProps => ({
