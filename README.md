@@ -2325,6 +2325,7 @@ export { Counter } from './Counter';
 
 ```typescript
 // app/rootReducer.ts
+import { combineReducers } from '@reduxjs/toolkit';
 import { counterReducer } from '../features/counter';
 import { authReducer }    from '../features/auth';
 
@@ -2345,8 +2346,10 @@ For features that should be conditionally loaded (e.g. by role or config flag), 
 
 ```typescript
 // app/store.ts
-import { configureStore, Reducer, AnyAction } from '@reduxjs/toolkit';
+import { configureStore, Reducer, AnyAction, combineReducers } from '@reduxjs/toolkit';
 import rootReducer, { RootState } from './rootReducer';
+
+export type { RootState };
 
 const store = configureStore({ reducer: rootReducer });
 
